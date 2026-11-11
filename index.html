@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آرتین فیلم</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Tahoma, Arial, sans-serif;
+    color: white;
+    background:
+        linear-gradient(rgba(0,0,0,.78), rgba(0,0,0,.88)),
+        url("https://upload.wikimedia.org/wikipedia/commons/c/cb/Persepolis-Panorama.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* لودینگ */
+#site-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: #080808;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity .5s ease, visibility .5s ease;
+}
+
+#site-loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-title {
+    color: #d4af37;
+    font-size: 32px;
+    margin-bottom: 25px;
+}
+
+.loader-spinner {
+    width: 55px;
+    height: 55px;
+    border: 5px solid #333;
+    border-top-color: #d4af37;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+#loader-text {
+    color: white;
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+#loader-progress {
+    width: 220px;
+    height: 7px;
+    background: #333;
+    border-radius: 20px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+#loader-bar {
+    height: 100%;
+    width: 0%;
+    background: #d4af37;
+    transition: width .2s;
+    border-radius: 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* هدر */
+header {
+    text-align: center;
+    padding: 30px 15px;
+    background: rgba(0,0,0,.85);
+    border-bottom: 3px solid #d4af37;
+}
+
+header h1 {
+    color: #d4af37;
+    margin: 0 0 12px;
+    font-size: 32px;
+}
+
+header p {
+    margin: 0;
+    font-size: 16px;
+}
+
+/* پست ها */
+.container {
+    width: 92%;
+    max-width: 850px;
+    margin: 30px auto;
+}
+
+.video-card {
+    background: rgba(15,15,15,.94);
+    border: 1px solid #d4af37;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.5);
+}
+
+.video-card h2 {
+    color: #e5c45b;
+    font-size: 20px;
+    margin: 5px 0 15px;
+}
+
+.video-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+/* فوتر */
+footer {
+    text-align: center;
+    padding: 25px;
+    background: rgba(0,0,0,.9);
+    border-top: 2px solid #d4af37;
+    color: #d4af37;
+}
+
+/* موبایل */
+@media (max-width: 600px) {
+    body {
+        background-attachment: scroll;
+    }
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    .video-card h2 {
+        font-size: 17px;
+    }
+
+    .container {
+        width: 94%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- صفحه لودینگ -->
+<div id="site-loader">
+    <h1 class="loader-title">آرتین فیلم</h1>
+    <div class="loader-spinner"></div>
+    <p id="loader-text">در حال بارگذاری تصاویر...</p>
+
+    <div id="loader-progress">
+        <div id="loader-bar"></div>
+    </div>
+</div>
+
+<!-- هدر -->
+<header>
+    <h1>آرتین فیلم</h1>
+    <p>بهترین فیلم ها ، گیف ها ، عکس ها</p>
+</header>
+
+<main class="container">
+
+    <!-- پست اول -->
+    <article class="video-card">
+        <h2>اسب‌سواری زنم 🐎</h2>
+        <img
+            src="https://shahvani.com/media/photos/pics/fuck-n_761.gif"
+            alt="اسب‌سواری"
+            loading="eager">
+    </article>
+
+    <!-- پست دوم -->
+    <article class="video-card">
+        <h2>بعد از مصرف دور بریزید 🗑️</h2>
+        <img
+            src="https://shahvani.com/media/photos/pics/332UkiG8I.jpg"
+            alt="بعد از مصرف دور بریزید"
+            loading="eager">
+    </article>
+
+    <!-- پست سوم -->
+    <article class="video-card">
+        <h2>این دوتا پرنسس 😋🤤</h2>
+        <img
+            src="https://shahvani.com/media/photos/pics/kC4YTo3p9.gif"
+            alt="این دوتا پرنسس"
+            loading="eager">
+    </article>
+
+    <!-- پست چهارم -->
+    <article class="video-card">
+        <h2>آب رسانی زنی که از مسجد اومده 💧</h2>
+        <img
+            src="https://shahvani.com/media/forum/17952427/b376d81765d2137c97d564eafa2c1c63.gif"
+            alt="آب رسانی"
+            loading="eager">
+    </article>
+
+</main>
+
+<footer>
+    © 2026 آرتین فیلم | تمامی حقوق محفوظ است
+</footer>
+
+<!-- سیستم لودینگ -->
+<script>
+const loader = document.getElementById("site-loader");
+const loaderText = document.getElementById("loader-text");
+const loaderBar = document.getElementById("loader-bar");
+
+const images = Array.from(document.images);
+const total = images.length;
+
+let loaded = 0;
+
+function updateProgress() {
+    loaded++;
+
+    const percent = Math.round((loaded / total) * 100);
+
+    loaderText.textContent =
+        `بارگذاری تصاویر: ${loaded} از ${total} (${percent}٪)`;
+
+    loaderBar.style.width = percent + "%";
+
+    if (loaded >= total) {
+        loaderText.textContent = "آماده شد! خوش آمدید 🎉";
+
+        setTimeout(() => {
+            loader.classList.add("hidden");
+        }, 600);
+    }
+}
+
+if (total === 0) {
+    loader.classList.add("hidden");
+} else {
+    images.forEach(img => {
+        if (img.complete) {
+            updateProgress();
+        } else {
+            img.addEventListener("load", updateProgress, { once: true });
+            img.addEventListener("error", updateProgress, { once: true });
+        }
+    });
+}
+</script>
+
+</body>
+  </html>
+  
