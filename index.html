@@ -5,59 +5,179 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Artin Hub</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#080808;color:white;font-family:Tahoma,Arial,sans-serif;overflow:hidden}
-.home{height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:25px}
+button{cursor:pointer;font-family:inherit}
+
+.home{
+height:100dvh;display:flex;flex-direction:column;
+justify-content:center;align-items:center;gap:25px
+}
 .logo{font-size:42px;font-weight:bold;direction:ltr}
 .hub{background:#ff7900;padding:5px 10px;border-radius:8px}
-button{cursor:pointer;font-family:inherit}
-.watch-btn,.add-btn{background:#ff7900;border:none;color:white;font-size:17px;font-weight:bold;padding:16px 30px;border-radius:12px}
+
+.watch-btn,.add-btn{
+background:#ff7900;border:0;color:white;font-size:17px;
+font-weight:bold;padding:16px 30px;border-radius:12px
+}
 .add-btn{background:#242424;border:1px solid #555}
-#videos{display:none;height:100dvh;width:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scrollbar-width:none;background:black}
+
+.admin-login{
+position:fixed;top:15px;left:15px;z-index:20;
+background:#ff7900;color:white;border:0;
+padding:12px 17px;border-radius:10px;font-weight:bold
+}
+.admin-logout{
+position:fixed;top:15px;left:15px;z-index:20;
+background:#333;color:white;border:0;
+padding:12px 17px;border-radius:10px;font-weight:bold
+}
+
+#videos{
+display:none;height:100dvh;width:100%;overflow-y:scroll;
+scroll-snap-type:y mandatory;scrollbar-width:none;background:black
+}
 #videos::-webkit-scrollbar{display:none}
-.video-page{height:100dvh;width:100%;display:flex;justify-content:center;align-items:center;scroll-snap-align:start;scroll-snap-stop:always;background:black}
-.video-frame{position:relative;width:100%;height:100%;max-width:480px;overflow:hidden;background:black}
-.video-frame iframe{position:absolute;width:100%;height:100%;top:0;left:0;border:0}
-.back-btn{position:fixed;z-index:10;top:15px;right:15px;border:none;background:#222;color:white;padding:10px 16px;border-radius:20px;font-size:14px}
-.feed-add{position:fixed;z-index:10;bottom:20px;left:15px;background:#ff7900;color:white;border:none;padding:13px 18px;border-radius:25px;font-weight:bold}
-#addPanel{display:none;position:fixed;z-index:30;inset:0;background:rgba(0,0,0,.88);justify-content:center;align-items:center;padding:20px}
-.panel{width:100%;max-width:400px;background:#191919;border:1px solid #333;border-radius:18px;padding:24px;text-align:center}
+
+.video-page{
+height:100dvh;width:100%;display:flex;justify-content:center;
+align-items:center;scroll-snap-align:start;
+scroll-snap-stop:always;background:black
+}
+.video-frame{
+position:relative;width:100%;height:100%;max-width:480px;
+overflow:hidden;background:black
+}
+.video-frame iframe{
+position:absolute;width:100%;height:100%;top:0;left:0;border:0
+}
+
+.back-btn{
+position:fixed;z-index:10;top:15px;right:15px;
+border:0;background:#222;color:white;padding:10px 16px;
+border-radius:20px;font-size:14px
+}
+.feed-add{
+position:fixed;z-index:10;bottom:20px;left:15px;
+background:#ff7900;color:white;border:0;
+padding:13px 18px;border-radius:25px;font-weight:bold
+}
+
+.overlay{
+display:none;position:fixed;z-index:50;inset:0;
+background:rgba(0,0,0,.9);justify-content:center;
+align-items:center;padding:20px
+}
+.panel{
+width:100%;max-width:400px;background:#191919;
+border:1px solid #333;border-radius:18px;
+padding:24px;text-align:center
+}
 .panel h2{margin-top:0;font-size:21px}
-.panel input{width:100%;padding:15px;border-radius:10px;border:1px solid #444;background:#080808;color:white;direction:ltr;font-size:14px;outline:none;margin:12px 0}
-.panel button{width:100%;margin-top:10px;padding:13px;border:none;border-radius:10px;font-size:15px;font-weight:bold}
+.panel input{
+width:100%;padding:15px;border-radius:10px;
+border:1px solid #444;background:#080808;color:white;
+font-size:14px;outline:none;margin:8px 0
+}
+.panel button{
+width:100%;margin-top:10px;padding:13px;
+border:0;border-radius:10px;font-size:15px;font-weight:bold
+}
 .submit-btn{background:#ff7900;color:white}
 .close-btn{background:#333;color:white}
 #status{font-size:13px;color:#ffb36e;margin-top:12px;line-height:1.8}
 </style>
 </head>
+
 <body>
 
+<!-- صفحه اصلی -->
 <div class="home" id="home">
-  <div class="logo">Artin <span class="hub">Hub</span></div>
-  <button class="watch-btn" onclick="startVideos()">اکسپلور (ویدیو کوتاه)</button>
-  <button class="add-btn" onclick="openAddPanel()">+ افزودن ویدیو</button>
+
+  <div class="logo">
+    Artin <span class="hub">Hub</span>
+  </div>
+
+  <button class="watch-btn" onclick="startVideos()">
+    اکسپلور (ویدیو کوتاه)
+  </button>
+
 </div>
 
+<!-- ورود ادمین -->
+<button class="admin-login" id="adminLoginBtn"
+onclick="openLogin()">Admin login</button>
+
+<button class="admin-logout" id="adminLogoutBtn"
+onclick="logout()" style="display:none">خروج ادمین</button>
+
+<!-- ویدیوها -->
 <div id="videos"></div>
 
-<button class="back-btn" id="backBtn" onclick="goHome()" style="display:none">برگشت</button>
-<button class="feed-add" id="feedAdd" onclick="openAddPanel()" style="display:none">+ افزودن ویدیو</button>
+<button class="back-btn" id="backBtn"
+onclick="goHome()" style="display:none">برگشت</button>
 
-<div id="addPanel">
+<!-- فقط برای ادمین -->
+<button class="feed-add" id="feedAdd"
+onclick="openUpload()" style="display:none">
++ افزودن ویدیو
+</button>
+
+<!-- پنجره ورود -->
+<div class="overlay" id="loginPanel">
+  <div class="panel">
+    <h2>Admin login</h2>
+
+    <input id="username" placeholder="Username"
+    autocomplete="username" dir="ltr">
+
+    <input id="password" type="password"
+    placeholder="Password" autocomplete="current-password"
+    dir="ltr">
+
+    <button class="submit-btn" onclick="login()">ورود</button>
+    <button class="close-btn" onclick="closeLogin()">بستن</button>
+
+    <div id="loginStatus"></div>
+  </div>
+</div>
+
+<!-- پنجره افزودن ویدیو -->
+<div class="overlay" id="uploadPanel">
   <div class="panel">
     <h2>افزودن ویدیو</h2>
-    <input id="videoLink" type="url" placeholder="لینک Embed جومپ‌شیر را وارد کن">
-    <button class="submit-btn" id="submitBtn" onclick="addVideo()">ثبت ویدیو</button>
-    <button class="close-btn" onclick="closeAddPanel()">بستن</button>
+
+    <input id="videoLink" type="text"
+    placeholder="لینک یا کد Embed جومپ‌شیر را وارد کن"
+    dir="ltr">
+
+    <button class="submit-btn" id="submitBtn"
+    onclick="addVideo()">ثبت ویدیو</button>
+
+    <button class="close-btn" onclick="closeUpload()">بستن</button>
+
     <div id="status"></div>
   </div>
 </div>
 
 <script>
+
+/* تنظیمات ادمین */
+const ADMIN_USERNAME = "ADMIN";
+const ADMIN_PASSWORD = "5555";
+
+/* تنظیمات JSONBin */
 const BIN_ID = "6af72805ffd5d16053bef05d";
+
+/* کلید API خودت را اینجا وارد کن */
 const API_KEY = "$2a$10$ptfuojfQlooOtI2e5oi.0uzl3osaOwjIP0zRXcMyeknrvGnrjztUS";
+
 const API_URL = "https://api.jsonbin.io/v3/b/" + BIN_ID;
+
+let isAdmin = false;
+let videosList = [];
 
 const initialVideos = [
 "https://jumpshare.com/embed/HsDcIfPajLiM8sFd2jKG",
@@ -67,8 +187,6 @@ const initialVideos = [
 "https://jumpshare.com/embed/EpTff8brtU7vMCUys8DG"
 ];
 
-let videosList = [];
-
 function headers(){
   return {
     "Content-Type":"application/json",
@@ -76,95 +194,223 @@ function headers(){
   };
 }
 
+/* ورود ادمین */
+function openLogin(){
+  document.getElementById("loginPanel").style.display="flex";
+  document.getElementById("loginStatus").textContent="";
+}
+
+function closeLogin(){
+  document.getElementById("loginPanel").style.display="none";
+}
+
+function login(){
+
+  const username=document.getElementById("username").value;
+  const password=document.getElementById("password").value;
+  const status=document.getElementById("loginStatus");
+
+  if(username===ADMIN_USERNAME && password===ADMIN_PASSWORD){
+
+    isAdmin=true;
+
+    document.getElementById("adminLoginBtn").style.display="none";
+    document.getElementById("adminLogoutBtn").style.display="block";
+
+    if(document.getElementById("videos").style.display==="block"){
+      document.getElementById("feedAdd").style.display="block";
+    }
+
+    closeLogin();
+
+    document.getElementById("username").value="";
+    document.getElementById("password").value="";
+
+    alert("ورود ادمین موفق بود!");
+
+  }else{
+    status.textContent="نام کاربری یا رمز عبور اشتباه است.";
+  }
+}
+
+/* خروج ادمین */
+function logout(){
+
+  isAdmin=false;
+
+  document.getElementById("adminLoginBtn").style.display="block";
+  document.getElementById("adminLogoutBtn").style.display="none";
+  document.getElementById("feedAdd").style.display="none";
+
+  closeUpload();
+  alert("از حساب ادمین خارج شدی.");
+}
+
+/* دریافت ویدیوها */
 async function getVideos(){
-  const response = await fetch(API_URL + "/latest",{headers:headers()});
-  if(!response.ok) throw new Error("خطا در دریافت اطلاعات");
-  const data = await response.json();
-  let list = data.record?.videos;
+
+  const response=await fetch(API_URL+"/latest",{
+    headers:headers()
+  });
+
+  if(!response.ok){
+    throw new Error("خطا در دریافت اطلاعات JSONBin");
+  }
+
+  const data=await response.json();
+  let list=data.record?.videos;
 
   if(!Array.isArray(list) || list.length===0){
     list=[...initialVideos];
     await saveVideos(list);
   }
+
   return list;
 }
 
+/* ذخیره ویدیوها */
 async function saveVideos(list){
+
   const response=await fetch(API_URL,{
     method:"PUT",
     headers:headers(),
     body:JSON.stringify({videos:list})
   });
-  if(!response.ok) throw new Error("خطا در ذخیره اطلاعات");
+
+  if(!response.ok){
+    throw new Error("ذخیره ویدیو ناموفق بود.");
+  }
 }
 
-function normalizeLink(link){
+/* تشخیص لینک مستقیم یا کد iframe */
+function normalizeLink(value){
+
   try{
-    const url=new URL(link.trim());
-    if(url.hostname!=="jumpshare.com" && url.hostname!=="www.jumpshare.com") return null;
-    if(url.pathname.startsWith("/share/")) url.pathname=url.pathname.replace("/share/","/embed/");
-    if(!url.pathname.startsWith("/embed/")) return null;
+
+    let link=value.trim();
+
+    // اگر کاربر کد کامل iframe وارد کرد
+    const iframeMatch=link.match(/<iframe[^>]+src=["']([^"']+)["']/i);
+
+    if(iframeMatch){
+      link=iframeMatch[1];
+    }
+
+    const url=new URL(link);
+
+    if(url.hostname!=="jumpshare.com" &&
+       url.hostname!=="www.jumpshare.com"){
+      return null;
+    }
+
+    if(url.pathname.startsWith("/share/")){
+      url.pathname=url.pathname.replace("/share/","/embed/");
+    }
+
+    if(!url.pathname.startsWith("/embed/")){
+      return null;
+    }
+
     return "https://jumpshare.com"+url.pathname;
-  }catch{return null}
+
+  }catch{
+    return null;
+  }
 }
 
+/* نمایش ویدیوها */
 function renderVideos(){
+
   const container=document.getElementById("videos");
   container.innerHTML="";
+
   videosList.forEach(link=>{
+
     const page=document.createElement("div");
     page.className="video-page";
+
     const frame=document.createElement("div");
     frame.className="video-frame";
+
     const iframe=document.createElement("iframe");
     iframe.src=link;
     iframe.allowFullscreen=true;
     iframe.setAttribute("allowfullscreen","");
+
     frame.appendChild(iframe);
     page.appendChild(frame);
     container.appendChild(page);
+
   });
 }
 
+/* بارگذاری اطلاعات */
 async function refreshVideos(){
+
   videosList=await getVideos();
   renderVideos();
 }
 
+/* ورود به اکسپلور */
 function startVideos(){
+
   document.getElementById("home").style.display="none";
   document.getElementById("videos").style.display="block";
   document.getElementById("backBtn").style.display="block";
-  document.getElementById("feedAdd").style.display="block";
-  refreshVideos().catch(e=>alert(e.message));
+
+  if(isAdmin){
+    document.getElementById("feedAdd").style.display="block";
+  }
+
+  refreshVideos().catch(error=>{
+    alert(error.message);
+  });
 }
 
+/* برگشت */
 function goHome(){
+
   document.getElementById("videos").style.display="none";
   document.getElementById("home").style.display="flex";
   document.getElementById("backBtn").style.display="none";
   document.getElementById("feedAdd").style.display="none";
+
   document.getElementById("videos").scrollTop=0;
 }
 
-function openAddPanel(){
-  document.getElementById("addPanel").style.display="flex";
+/* پنجره آپلود */
+function openUpload(){
+
+  if(!isAdmin){
+    alert("ابتدا باید وارد حساب ادمین شوی.");
+    return;
+  }
+
+  document.getElementById("uploadPanel").style.display="flex";
   document.getElementById("status").textContent="";
   document.getElementById("videoLink").value="";
 }
 
-function closeAddPanel(){
-  document.getElementById("addPanel").style.display="none";
+function closeUpload(){
+  document.getElementById("uploadPanel").style.display="none";
 }
 
+/* افزودن ویدیو */
 async function addVideo(){
+
+  if(!isAdmin){
+    alert("اجازه افزودن ویدیو نداری.");
+    return;
+  }
+
   const input=document.getElementById("videoLink");
   const button=document.getElementById("submitBtn");
   const status=document.getElementById("status");
+
   const link=normalizeLink(input.value);
 
   if(!link){
-    status.textContent="لطفاً لینک معتبر Jumpshare وارد کن.";
+    status.textContent="لینک یا کد Embed معتبر جومپ‌شیر وارد کن.";
     return;
   }
 
@@ -173,28 +419,45 @@ async function addVideo(){
   status.textContent="لطفاً صبر کن...";
 
   try{
+
     const latest=await getVideos();
+
     if(latest.includes(link)){
       status.textContent="این ویدیو قبلاً اضافه شده است.";
       return;
     }
+
     latest.push(link);
+
     await saveVideos(latest);
+
     videosList=latest;
     renderVideos();
-    status.textContent="ویدیو اضافه شد!";
+
+    status.textContent="ویدیو با موفقیت اضافه شد!";
     input.value="";
-    setTimeout(closeAddPanel,1000);
-  }catch(e){
+
+    setTimeout(closeUpload,1000);
+
+  }catch(error){
+
     status.textContent="خطا در ذخیره. تنظیمات JSONBin را بررسی کن.";
-    console.error(e);
+    console.error(error);
+
   }finally{
+
     button.disabled=false;
     button.textContent="ثبت ویدیو";
+
   }
 }
 
-refreshVideos().catch(console.error);
+/* بارگذاری اولیه */
+refreshVideos().catch(error=>{
+  console.error(error);
+});
+
 </script>
+
 </body>
 </html>
